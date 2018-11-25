@@ -9,3 +9,13 @@ __version__ = '0.1.7'
 from importmagic.importer import Import, Imports, get_update, update_imports
 from importmagic.index import SymbolIndex
 from importmagic.symbols import Scope
+
+
+__all__ = [
+    'Import',
+    'Imports',
+    'get_update',
+    'update_imports',
+    'SymbolIndex',
+    'Scope',
+]

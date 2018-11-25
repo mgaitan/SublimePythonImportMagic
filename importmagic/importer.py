@@ -7,6 +7,7 @@ from importmagic.six import StringIO
 
 
 class Iterator(object):
+
     def __init__(self, tokens, start=None, end=None):
         self._tokens = tokens
         self._cursor = start or 0
@@ -41,6 +42,7 @@ class Iterator(object):
 
 
 class Import(object):
+
     def __init__(self, location, name, alias):
         self.location = location
         self.name = name
@@ -71,8 +73,9 @@ LOCATION_ORDER = 'FS3L'
 
 class Imports(object):
 
-    _style = {'multiline': 'parentheses',
-              'max_columns': 80,
+    _style = {
+        'multiline': 'parentheses',
+        'max_columns': 80,
     }
 
     def __init__(self, index, source):

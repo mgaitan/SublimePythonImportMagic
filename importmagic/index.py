@@ -402,8 +402,7 @@ class SymbolVisitor(ast.NodeVisitor):
 
     def visit_Assign(self, node):
         # TODO: Handle __all__
-        is_name = lambda n: isinstance(n, ast.Name)
-        for name in filter(is_name, node.targets):
+        for name in [n for n in node.targets if isinstance(n, ast.Name)]:
             if name.id == '__all__' and isinstance(node.value, ast.List):
                 for subnode in node.value.elts:
                     if isinstance(subnode, ast.Str):

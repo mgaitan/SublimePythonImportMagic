@@ -1,18 +1,14 @@
 """Parse Python source and extract unresolved symbols."""
 
 import ast
+import pprint
 import sys
 from contextlib import contextmanager
 from itertools import chain
 
 from importmagic.six import string_types
+from importmagic.six.moves import builtins
 from importmagic.util import parse_ast
-
-
-try:
-    import builtins as __builtin__
-except:
-    import __builtin__
 
 
 class _InvalidSymbol(Exception):
@@ -20,9 +16,10 @@ class _InvalidSymbol(Exception):
 
 
 class Scope(object):
+
     GLOBALS = ['__name__', '__file__', '__loader__', '__package__', '__path__']
     PYTHON3_BUILTINS = ['PermissionError']
-    ALL_BUILTINS = set(dir(__builtin__)) | set(GLOBALS) | set(PYTHON3_BUILTINS)
+    ALL_BUILTINS = set(dir(builtins)) | set(GLOBALS) | set(PYTHON3_BUILTINS)
 
     def __init__(self, parent=None, define_builtins=True, is_class=False):
         self._parent = parent
@@ -395,6 +392,5 @@ if __name__ == '__main__':
     with open(sys.argv[1]) as fd:
         scope = Scope.from_source(fd.read())
     unresolved, unreferenced = scope.find_unresolved_and_unreferenced_symbols()
-    from pprint import pprint
     pprint(unresolved)
     pprint(unreferenced)
